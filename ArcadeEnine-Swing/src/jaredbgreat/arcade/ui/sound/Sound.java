@@ -10,6 +10,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineEvent.Type;
+import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -17,7 +20,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  * @author jared
  */
-public class Sound {
+public class Sound implements LineListener {
     public static final Registry<Sound> registry = new Registry<>();
     private final Clip[] sounds; 
     
@@ -35,7 +38,6 @@ public class Sound {
             info = new DataLine.Info(Clip.class, format);
             clip = AudioSystem.getClip();
             clip.open(stream);
-            clip.close();
             return clip;
         } catch (LineUnavailableException | 
                 UnsupportedAudioFileException | 
@@ -53,7 +55,9 @@ public class Sound {
         GameLogger.mainLogger.logInfo("Found " + sounds.length 
                 + " audio clips to add");
         for(int i = 0; i < sounds.length; i++) {
+            System.out.println("Loading sound #" + i + ", called " + files.get(i));
             sounds[i] = readClip(files.get(i));
+            sounds[i].addLineListener(this);
         }
     }
     
@@ -66,17 +70,37 @@ public class Sound {
     
     
     public void play() {
-        sounds[0].start();
+        if(sounds[0].isActive()) {
+            sounds[0].stop();
+            sounds[0].setFramePosition(0);
+            sounds[0].start();
+        } else {
+            sounds[0].start();
+        }
     }
     
     
     public void play(int i) {
-        sounds[i].start();
+        if(sounds[i].isActive()) {
+            sounds[i].stop();
+            sounds[i].setFramePosition(0);
+            sounds[i].start();
+        } else {
+            sounds[i].start();
+        }
     }
     
     
     public void play(Random rng) {
-        sounds[rng.nextInt(sounds.length)].start();
+        play(rng.nextInt(sounds.length));
+    }
+
+    @Override
+    public void update(LineEvent event) {
+        if(event.getType() == Type.STOP) {
+            Clip clip = ((Clip)(event.getLine()));
+            clip.setFramePosition(0);
+        }
     }
     
 }
