@@ -7,6 +7,7 @@ import jaredbgreat.arcade.util.Registry;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -126,6 +127,18 @@ public class MainWindow extends JFrame {
      */
     public void draw() {
         currentPanel.draw();
+    }
+    
+    
+    /**
+     * This will forward a mouse
+     * 
+     * @param e 
+     */
+    public void clickMouse(MouseEvent e) {
+        if(currentPanel instanceof AbstractClickablePanel) {
+            ((AbstractClickablePanel)currentPanel).activateWidgets(e);
+        }
     }
     
     

@@ -2,41 +2,20 @@
 package jaredbgreat.arcade.ui;
 
 import jaredbgreat.arcade.ui.graphics.Graphic;
-import jaredbgreat.arcade.util.GameLogger;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Jared Blackburn
  */
-public class StartPanel extends JPanel implements IView {
+public class StartPanel extends AbstractClickablePanel {
     private final Toolkit tk = Toolkit.getDefaultToolkit();
     private final int startScreen;
     
     public StartPanel() {
         startScreen = Graphic.registry.getID("title");
-    }
-
-    @Override
-    public void draw() {
-        // Draw to the hidden graphics buffer
-        Graphic.draw(startScreen, 0, 0, 0);
-        
-        // Double buffering -- draw to the screen
-        Graphics g;
-        try {
-            g = this.getGraphics();
-            if(g != null) {
-                drawImage(g);
-                tk.sync();
-                g.dispose();
-            }
-        } catch (Exception ex) {
-            GameLogger.mainLogger.logException(ex);
-        }
     }
     
 
@@ -61,6 +40,11 @@ public class StartPanel extends JPanel implements IView {
                     null);
         }
         Graphic.clearScreen();
+    }
+
+    @Override
+    public void drawGame() {
+        Graphic.draw(startScreen, 0, 0, 0);
     }
     
 }

@@ -59,7 +59,8 @@ public abstract class AbstractLoader {
             GameLogger.mainLogger.logInfo("Trying to open file " + infoLoc);
             inText = new BufferedReader(new InputStreamReader(textStream));
         } else {
-            GameLogger.mainLogger.logError("ERROR! Could not get stream for " +infoLoc);            
+            GameLogger.mainLogger.logError("ERROR! Could not get stream for " 
+                    + infoLoc);            
         } if(inText != null) try {
             parseInfo(inText);
             inText.close();

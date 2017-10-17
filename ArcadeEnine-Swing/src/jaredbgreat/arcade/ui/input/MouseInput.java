@@ -1,6 +1,7 @@
 package jaredbgreat.arcade.ui.input;
 
 import jaredbgreat.arcade.game.BaseGame;
+import jaredbgreat.arcade.ui.MainWindow;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -35,10 +36,11 @@ public class MouseInput implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        MainWindow.getMainWindow().clickMouse(e);
         if(BaseGame.game.blockInput() || (clicked == null)) {
          return;
         }
-        clicked.getCommands(e, commands);
+        commands = clicked.getCommands(e);
         clicked.getVector(e, fvector);
     }
     
@@ -48,7 +50,7 @@ public class MouseInput implements MouseListener {
         if(BaseGame.game.blockInput() || (pressed == null)) {
          return;
         }
-        pressed.getCommands(e, commands);
+        commands |= pressed.getCommands(e);
         pressed.getVector(e, fvector);
     }
     
@@ -58,7 +60,7 @@ public class MouseInput implements MouseListener {
         if(BaseGame.game.blockInput() || (released == null)) {
          return;
         }
-        released.getCommands(e, commands);
+        commands &= ~released.getCommands(e);
         released.getVector(e, fvector);
     }
     

@@ -50,7 +50,7 @@ public class Sound implements LineListener {
     }
     
     
-    public Sound(List<String> files) {
+    private Sound(List<String> files) {
         sounds = new Clip[files.size()];
         GameLogger.mainLogger.logInfo("Found " + sounds.length 
                 + " audio clips to add");

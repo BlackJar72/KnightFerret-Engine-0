@@ -57,6 +57,10 @@ public class InputAgregator {
     
     public void clear() {
         commands = 0;
+        KEYS.clear();
+        for(int i = 0; i < fvector.length; i ++) {
+            fvector[i] = 0.0d;
+        }
     }
     
 }

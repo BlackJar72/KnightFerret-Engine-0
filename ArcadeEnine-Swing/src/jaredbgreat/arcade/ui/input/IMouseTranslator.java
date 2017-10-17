@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
  * @author jared
  */
 public interface IMouseTranslator {
-    public void getCommands(MouseEvent e, int out);
+    public  int getCommands(MouseEvent e);
     public void getVector(MouseEvent e, double[] fvector);
     
 }
