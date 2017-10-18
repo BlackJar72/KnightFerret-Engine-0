@@ -15,6 +15,7 @@ public class StartPanel extends AbstractClickablePanel {
     private final int startScreen;
     
     public StartPanel() {
+        super();
         startScreen = Graphic.registry.getID("title");
     }
     
@@ -45,6 +46,7 @@ public class StartPanel extends AbstractClickablePanel {
     @Override
     public void drawGame() {
         Graphic.draw(startScreen, 0, 0, 0);
+        drawWidgets();
     }
     
 }

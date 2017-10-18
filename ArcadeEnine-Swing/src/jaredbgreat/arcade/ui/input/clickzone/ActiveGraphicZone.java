@@ -1,9 +1,7 @@
 package jaredbgreat.arcade.ui.input.clickzone;
 
 
-import jaredbgreat.arcade.ui.graphics.Graphic;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 /**
  *
@@ -23,13 +21,15 @@ public class ActiveGraphicZone extends GraphicZone implements IActiveViewZone {
     }
     
 
-    public ActiveGraphicZone(int x, int y, Graphic graphic) {
+    public ActiveGraphicZone(int x, int y, int graphic, IZoneAction action) {
         super(x, y, graphic);
+        this.action = action;
     }
     
 
-    public ActiveGraphicZone(int x, int y, BufferedImage graphic) {
+    public ActiveGraphicZone(int x, int y, String graphic, IZoneAction action) {
         super(x, y, graphic);
+        this.action = action;
     }
     
     
@@ -40,7 +40,8 @@ public class ActiveGraphicZone extends GraphicZone implements IActiveViewZone {
     
     @Override
     public void activate(MouseEvent e) {
-        if(isActivated(e)) {
+        // Should I test for the null case?  Or leave it alone to fail fast?
+        if(isActivated(e) && (action != null)) {
             action.activate(e);
         }
     }

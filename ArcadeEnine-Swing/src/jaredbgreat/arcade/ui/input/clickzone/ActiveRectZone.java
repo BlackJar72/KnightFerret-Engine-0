@@ -14,6 +14,12 @@ public class ActiveRectZone extends RectZone implements IActiveViewZone {
         super(x, y, w, h);
     }
     
+
+    public ActiveRectZone(int x, int y, int w, int h, IZoneAction action) {
+        super(x, y, w, h);
+        this.action = action;
+    }
+    
     
     public void setAction(IZoneAction act) {
         action = act;
@@ -22,7 +28,8 @@ public class ActiveRectZone extends RectZone implements IActiveViewZone {
     
     @Override
     public void activate(MouseEvent e) {
-        if(isActivated(e)) {
+        // Should I test for the null case?  Or leave it alone to fail fast?
+        if(isActivated(e) && (action != null)) {
             action.activate(e);
         }
     }

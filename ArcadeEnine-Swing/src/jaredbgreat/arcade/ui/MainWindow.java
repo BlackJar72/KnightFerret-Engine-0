@@ -17,10 +17,7 @@ import javax.swing.JPanel;
  */
 public class MainWindow extends JFrame {
     private static MainWindow window;
-
-    public static MainWindow getMainWindow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     public final int xSize;
     public final int ySize;
     
@@ -53,7 +50,7 @@ public class MainWindow extends JFrame {
         startPanel = new StartPanel();
         startPanel.setBackground(Color.BLACK);
         contentPane.add(startPanel, "start");
-        panels.add("start", currentPanel);
+        panels.add("start", startPanel);
         
         addKeyListener(InputAgregator.getInputAgregator().getKeyListener());        
         addMouseListener(InputAgregator.getInputAgregator().getMouseListener());
@@ -81,6 +78,17 @@ public class MainWindow extends JFrame {
         panels.add(name, panel);
         contentPane.add((Component) panel, name);
         return panels.getID(name);
+    }
+    
+    
+    /**
+     * This get a panel for use elsewhere.
+     * 
+     * @param name 
+     * @return  
+     */
+    public IView getPanel(String name) {
+        return panels.getFromName(name);
     }
     
     
@@ -117,6 +125,11 @@ public class MainWindow extends JFrame {
         if(window == null) {
             window = new MainWindow(width, height);
         }
+        return window;
+    }
+    
+
+    public static MainWindow getMainWindow() {
         return window;
     }
     
