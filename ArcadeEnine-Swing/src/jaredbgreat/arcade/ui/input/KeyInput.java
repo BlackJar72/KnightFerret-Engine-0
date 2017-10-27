@@ -46,7 +46,7 @@ public class KeyInput implements KeyListener {
     
     
     public void update() {
-        inputController.update(commands, null);
+        inputController.update(commands);
     }
     
     

@@ -9,6 +9,9 @@ import java.util.List;
  * @author Jared Blackburn
  */
 public class InputAgregator {
+    private static InputAgregator in;
+    private int commands;
+    
     private final KeyInput      keyboard;
     private final PointerInput  pointer;
     private final AcceloInput   accel;
