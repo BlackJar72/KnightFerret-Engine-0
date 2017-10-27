@@ -2,7 +2,6 @@ package jaredbgreat.arcade.ui.input.clickzone;
 
 import jaredbgreat.arcade.ui.MainWindow;
 import jaredbgreat.arcade.ui.graphics.Graphic;
-import jaredbgreat.arcade.ui.input.clickzone.IViewZone;
 import java.awt.event.MouseEvent;
 
 /**

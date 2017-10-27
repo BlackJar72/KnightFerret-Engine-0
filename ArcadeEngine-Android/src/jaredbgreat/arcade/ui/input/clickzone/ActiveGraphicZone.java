@@ -38,6 +38,7 @@ public class ActiveGraphicZone extends GraphicZone implements IActiveViewZone {
     }
     
     
+    @Override
     public void activate(PointerEvent e) {
         if(isActivated(e)) {
             action.activate(e);

@@ -30,18 +30,6 @@ public abstract class AbstractGamePanel implements IView {
         if(holder.getSurface().isValid()) {            
             // Put game / screen specific drawing in the drawGame() method
             drawGame();
-        
-        /* E.g., this in the drawGameFunction...
-        Graphic.draw(board, 0, 0, 0);
-        for(int i = Entity.listSize() - 1; i > -1; i--) {
-            Entity.get(i).draw();
-        }        
-        Graphic.clearArea(0, 576, 480, 640);
-        if(Game.game.isGameOver()) {
-            Font.drawString("Game Over", 144, 276);
-        }
-        */
-
             // Double buffering -- draw to the screen
             Canvas canvas = holder.lockCanvas();        
             Rect area = canvas.getClipBounds();

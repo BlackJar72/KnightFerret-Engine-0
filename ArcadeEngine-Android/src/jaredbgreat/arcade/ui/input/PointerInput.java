@@ -16,6 +16,7 @@ import java.util.List;
 public class PointerInput implements OnTouchListener {
     private final View screen;
     private final float scaleX, scaleY;
+    private volatile int commands;
     private IMouseTranslator pressed;
     private IMouseTranslator released;
     private IMouseTranslator moved;
@@ -107,12 +108,14 @@ public class PointerInput implements OnTouchListener {
         int num = downEvents.size();
         if(pressed != null) {
             for(int i = 0; i < num; i++) {
+                commands |= pressed.getCommands(downEvents.get(i));
                 pressed.process(downEvents.get(i));
             }
         }
         if(released != null) {
             num = upEvents.size();
             for(int i = 0; i < num; i++) {
+                commands &= ~released.getCommands(upEvents.get(i));
                 released.process(upEvents.get(i));
             }
         }
@@ -145,6 +148,11 @@ public class PointerInput implements OnTouchListener {
     
     public List<PointerEvent> getDragged() {
         return moveEvents;
+    }
+    
+    
+    public int getCommands() {
+        return commands;
     }
 
 }

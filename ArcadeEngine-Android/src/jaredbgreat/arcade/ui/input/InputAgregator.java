@@ -62,6 +62,9 @@ public class InputAgregator {
         // Apply and report input
         commands  = 0;
         commands |= KEYS.getCommands();
+        commands |= MOUSE.getCommands();
+        ACCEL.getAngles(avector);
+        ANGLES.getAngles(avector);
         inputController.update(commands, avector);
     }
     
