@@ -16,6 +16,9 @@ import java.util.List;
 public class PointerInput implements OnTouchListener {
     private final View screen;
     private final float scaleX, scaleY;
+    private IMouseTranslator pressed;
+    private IMouseTranslator released;
+    private IMouseTranslator moved;
     private final ObjectPool.ObjectFactory<PointerEvent> factory;
     private final ObjectPool<PointerEvent> pool;
     private final ArrayList<PointerEvent> upBuffer, upEvents;
@@ -97,6 +100,36 @@ public class PointerInput implements OnTouchListener {
         events.clear();
         events.addAll(buffer);
         buffer.clear();
+    }
+    
+    
+    public void processEvents() {
+        int num = downEvents.size();
+        if(pressed != null) {
+            for(int i = 0; i < num; i++) {
+                pressed.process(downEvents.get(i));
+            }
+        }
+        if(released != null) {
+            num = upEvents.size();
+            for(int i = 0; i < num; i++) {
+                released.process(upEvents.get(i));
+            }
+        }
+        if(moved != null) {
+            num = upEvents.size();
+            for(int i = 0; i < num; i++) {
+                moved.process(moveEvents.get(i));
+            }
+        }
+    }
+    
+    
+    public void setTranslators(IMouseTranslator press, 
+            IMouseTranslator release, IMouseTranslator move) {
+        pressed = press;
+        released = release;
+        moved = move;
     }
     
     

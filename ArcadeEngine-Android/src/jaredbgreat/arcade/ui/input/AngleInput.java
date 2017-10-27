@@ -37,6 +37,13 @@ public class AngleInput implements SensorEventListener {
     }
     
     
+    public void getAngles(float[] avector) {
+        avector[3] = angles[0];
+        avector[4] = angles[1];
+        avector[5] = angles[2];
+    }
+    
+    
     public float[] getAngles() {
         return angles;
     }

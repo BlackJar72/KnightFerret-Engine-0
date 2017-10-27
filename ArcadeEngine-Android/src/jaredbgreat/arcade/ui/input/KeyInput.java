@@ -8,6 +8,7 @@ import android.view.View.OnKeyListener;
 import jaredbgreat.arcade.game.BaseGame;
 import jaredbgreat.arcade.util.memory.ObjectPool;
 import jaredbgreat.arcade.util.memory.ObjectPool.ObjectFactory;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class KeyInput implements OnKeyListener {
     private final View screen;
+    private IKeyTranslator pressed, released;
+    private volatile int commands;
     private final ObjectFactory<KeyboardEvent> factory;
     private final ObjectPool<KeyboardEvent> pool;
     private final ArrayList<KeyboardEvent> upBuffer, upEvents;
@@ -58,10 +61,12 @@ public class KeyInput implements OnKeyListener {
                 event.code = code;
                 if(action == android.view.KeyEvent.ACTION_DOWN) {
                     event.type = KeyboardEvent.DOWN;                    
+                    commands = commands | pressed.translate(event);
                     downBuffer.add(event);
                 }
                 if(action == android.view.KeyEvent.ACTION_UP) {
                     event.type = KeyboardEvent.UP;                    
+                    commands &= ~released.translate(event);
                     upBuffer.add(event);
                 }
         }
@@ -75,13 +80,36 @@ public class KeyInput implements OnKeyListener {
     }
     
     
-    public List<KeyboardEvent> getPressed() {
-        return downEvents;
+    public void clear() {
+        commands = 0;
     }
     
     
-    public List<KeyboardEvent> getReleased() {
-        return upEvents;
+    public int getCommands() {
+        return commands;
+    }
+    
+    
+    public void processEvents() {
+        int num = downEvents.size();
+        if(pressed != null) {
+            for(int i = 0; i < num; i++) {
+                pressed.process(downEvents.get(i));
+            }
+        }
+        if(released != null) {
+            num = upEvents.size();
+            for(int i = 0; i < num; i++) {
+                released.process(upEvents.get(i));
+            }
+        }
+    }
+    
+    
+    public void setTranslators(IKeyTranslator press, 
+            IKeyTranslator release) {
+        pressed = press;
+        released = release;        
     }
     
     

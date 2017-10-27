@@ -2,7 +2,7 @@ package jaredbgreat.arcade.ui.input;
 
 import android.content.Context;
 import android.view.View;
-import java.util.List;
+import jaredbgreat.arcade.entity.IInputController;
 
 /**
  *
@@ -11,128 +11,63 @@ import java.util.List;
 public class InputAgregator {
     private static InputAgregator in;
     private int commands;
+    private final float[] avector;
+    private final IInputController inputController;
     
-    private final KeyInput      keyboard;
-    private final PointerInput  pointer;
-    private final AcceloInput   accel;
-    private final AngleInput    angles;
+    private final KeyInput      KEYS;
+    private final PointerInput  MOUSE; // Treating touches as virtual mice
+    private final AcceloInput   ACCEL;
+    private final AngleInput    ANGLES;
     
     
-    public InputAgregator(Context context, View view) {
-        accel  = new AcceloInput(context);
-        angles = new AngleInput(context);
-        keyboard = new KeyInput(view);
-        pointer  = new PointerInput(view);
+    public InputAgregator(Context context, View view, 
+            IInputController controller) {
+        ACCEL   = new AcceloInput(context);
+        ANGLES  = new AngleInput(context);
+        KEYS    = new KeyInput(view);
+        MOUSE   = new PointerInput(view);
+        avector = new float[6];
+        inputController = controller;
     }
+    
+    
+    public static void init(Context context, View view, 
+            IInputController controller) {
+        in = new InputAgregator(context, view, controller);        
+    }
+    
+    
+    public static InputAgregator getInputAgregator() {
+        return in;
+    }
+    
+    
+    public KeyInput getKeyListener() {
+        return KEYS;
+    }
+    
+    
+    public PointerInput getMouseListener() {
+        return MOUSE;
+    }
+    
     
     
     public void update() {
-        keyboard.update();
+        // Update buffered input systems
+        KEYS.update();
+        KEYS.processEvents();
+        MOUSE.update();
+        MOUSE.processEvents();
+        // Apply and report input
+        commands  = 0;
+        commands |= KEYS.getCommands();
+        inputController.update(commands, avector);
     }
     
     
-    /*------------------------------------------------------------------------*/
-    /*                 ACCELOROMETER INPUT FUNCTIONS                          */
-    /*------------------------------------------------------------------------*/
-    
-    
-    public float getAx() {
-        return accel.getAx();
+    public void clear() {
+        commands = 0;
+        KEYS.clear();
     }
-    
-    
-    public float getAy() {
-        return accel.getAy();
-    }
-    
-    
-    public float getAz() {
-        return accel.getAx();
-    }
-    
-    
-    public float[] getAcceleration() {
-        return accel.getAccel();
-    }
-    
-    
-    public AcceloInput getAcceloInput() {
-        return accel;
-    }
-    
-    
-    /*------------------------------------------------------------------------*/
-    /*                   ORIENTATION INPUT FUNCTIONS                          */
-    /*------------------------------------------------------------------------*/
-    
-    
-    public float getyaw() {
-        return angles.getYaw();
-    }
-    
-    
-    public float getPitch() {
-        return angles.getPitch();
-    }
-    
-    
-    public float getRoll() {
-        return angles.getRoll();
-    }
-    
-    
-    public float[] getAngles() {
-        return angles.getAngles();
-    }
-    
-    
-    public AngleInput getAngleInput() {
-        return angles;
-    }
-    
-    
-    /*------------------------------------------------------------------------*/
-    /*                     KEYBOARD INPUT FUNCTIONS                           */
-    /*------------------------------------------------------------------------*/
-    
-    
-    public List<KeyboardEvent> getPressedKeys() {
-        return keyboard.getPressed();
-    }
-    
-    
-    public List<KeyboardEvent> getReleasedKeys() {
-        return keyboard.getReleased();
-    }
-    
-    
-    public KeyInput getKeyInput() {
-        return keyboard;
-    }
-    
-    
-    /*------------------------------------------------------------------------*/
-    /*                     KEYBOARD INPUT FUNCTIONS                           */
-    /*------------------------------------------------------------------------*/
-    
-    
-    public List<PointerEvent> getPointerDown() {
-        return pointer.getPressed();
-    }
-    
-    
-    public List<PointerEvent> getPointerUp() {
-        return pointer.getReleased();
-    }
-    
-    
-    public List<PointerEvent> getPointerDrag() {
-        return pointer.getDragged();
-    }
-    
-    
-    public PointerInput getPointerInput() {
-        return pointer;
-    }
-
 }

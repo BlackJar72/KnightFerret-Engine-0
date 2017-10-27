@@ -37,6 +37,13 @@ public class AcceloInput implements SensorEventListener {
     }
     
     
+    public void getAngles(float[] avector) {
+        avector[0] = accel[0];
+        avector[1] = accel[1];
+        avector[2] = accel[2];
+    }
+    
+    
     public float[] getAccel() {
         return accel;
     }

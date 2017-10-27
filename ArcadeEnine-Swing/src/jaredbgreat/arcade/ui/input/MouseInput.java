@@ -64,6 +64,14 @@ public class MouseInput implements MouseListener {
         released.getVector(e, fvector);
     }
     
+    
+    public void setTranslators(IMouseTranslator press, 
+            IMouseTranslator release, IMouseTranslator click) {
+        pressed = press;
+        released = release;
+        clicked = click;
+    }
+    
 
     /*------------------------------------------------------------------------//
     //                           UNUSED METHODS                               //

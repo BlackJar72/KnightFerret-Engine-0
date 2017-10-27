@@ -2,7 +2,6 @@
 package jaredbgreat.arcade.ui.input;
 
 
-import jaredbgreat.arcade.entity.IInputController;
 import jaredbgreat.arcade.game.BaseGame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,7 +12,6 @@ import java.awt.event.KeyListener;
  */
 public class KeyInput implements KeyListener { 
    private IKeyTranslator pressed, released;
-   private IInputController inputController;
    private int commands;
    
    
@@ -42,11 +40,6 @@ public class KeyInput implements KeyListener {
     
     public void clear() {
         commands = 0;
-    }
-    
-    
-    public void update() {
-        inputController.update(commands);
     }
     
     

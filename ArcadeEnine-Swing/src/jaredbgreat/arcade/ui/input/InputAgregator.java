@@ -15,7 +15,7 @@ public class InputAgregator {
     private final IInputController inputController;
     
     
-    public InputAgregator(int vectorSize, KeyInput keys, MouseInput mouse, 
+    public InputAgregator(KeyInput keys, MouseInput mouse, 
             IInputController controller) {
         KEYS = keys;
         MOUSE = mouse;
@@ -23,9 +23,9 @@ public class InputAgregator {
     }
     
     
-    public static void init(int vectorSize, KeyInput keys, MouseInput mouse, 
+    public static void init(KeyInput keys, MouseInput mouse, 
             IInputController controller) {
-        in = new InputAgregator(vectorSize, keys, mouse, controller);        
+        in = new InputAgregator(keys, mouse, controller);        
     }
     
     
@@ -48,6 +48,7 @@ public class InputAgregator {
     public void update() {
         commands  = 0;
         commands |= KEYS.getCommands();
+        commands |= MOUSE.getCommands();
         inputController.update(commands);
     }
     
