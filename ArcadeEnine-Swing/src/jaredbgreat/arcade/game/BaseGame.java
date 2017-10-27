@@ -207,6 +207,10 @@ public abstract class BaseGame {
 
     public boolean isGameOver() {
         return gameOver;
+    }    
+    
+    public double getTime() {
+        return timer.getTime();
     }
     
 }
