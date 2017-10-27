@@ -22,9 +22,11 @@ public abstract class BaseGame {
                              inGame  = false,  gameOver = false,
                              inDemo  = false;
     
+    // FIXME: This should not be a hard-coded value!  (Especially for mobile)
     public static final int BASE_FPS = 60;
     protected static final float expectedTime  = 1f / BASE_FPS;
     protected static final long  expectedSleep = 1000 / BASE_FPS;
+    
     protected double lastTime, thisTime, passedTime;
     protected double delta;
     protected double gameOverTime;
@@ -147,9 +149,13 @@ public abstract class BaseGame {
     }
     
     
-    protected void unpause() {
-        timer.resume();
-        paused = false;
+    protected void setPause(boolean pause) {
+        paused = pause;
+        if(paused) {
+            timer.pause();
+        } else {
+            timer.resume();
+        }
     }
     
     

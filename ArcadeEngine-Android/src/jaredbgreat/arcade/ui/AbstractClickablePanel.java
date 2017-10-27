@@ -3,7 +3,7 @@ package jaredbgreat.arcade.ui;
 import android.view.SurfaceView;
 import jaredbgreat.arcade.ui.graphics.IDrawable;
 import jaredbgreat.arcade.ui.input.clickzone.IActiveViewZone;
-import jaredbgreat.arcade.ui.input.PointerEvent;
+import jaredbgreat.arcade.ui.input.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +40,7 @@ public abstract class AbstractClickablePanel extends AbstractGamePanel {
     }
     
     
-    public void checkWidgets(PointerEvent e) {
+    public void activateWidgets(MouseEvent e) {
         for(int i = widgets.size() - 1; i > -1; i--) {
             widgets.get(i).activate(e);
         }

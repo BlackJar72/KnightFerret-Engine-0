@@ -8,9 +8,7 @@ import android.view.View.OnKeyListener;
 import jaredbgreat.arcade.game.BaseGame;
 import jaredbgreat.arcade.util.memory.ObjectPool;
 import jaredbgreat.arcade.util.memory.ObjectPool.ObjectFactory;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

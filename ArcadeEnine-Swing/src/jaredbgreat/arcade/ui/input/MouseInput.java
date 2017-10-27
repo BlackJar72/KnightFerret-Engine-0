@@ -11,26 +11,13 @@ import java.awt.event.MouseListener;
  */
 public class MouseInput implements MouseListener {
     private int commands;
-    private final double[] fvector;
     private IMouseTranslator clicked;
     private IMouseTranslator pressed;
     private IMouseTranslator released;
     
     
-    public MouseInput(IMouseTranslator ckick, 
-                      IMouseTranslator press, 
-                      IMouseTranslator release) {
-        fvector = new double[6];
-    }
-    
-    
     public int getCommands() {
         return commands;
-    }
-    
-    
-    public double[] getVector() {
-        return fvector;
     }
     
 
@@ -41,7 +28,6 @@ public class MouseInput implements MouseListener {
          return;
         }
         commands = clicked.getCommands(e);
-        clicked.getVector(e, fvector);
     }
     
 
@@ -51,7 +37,6 @@ public class MouseInput implements MouseListener {
          return;
         }
         commands |= pressed.getCommands(e);
-        pressed.getVector(e, fvector);
     }
     
 
@@ -61,7 +46,6 @@ public class MouseInput implements MouseListener {
          return;
         }
         commands &= ~released.getCommands(e);
-        released.getVector(e, fvector);
     }
     
     

@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import jaredbgreat.arcade.loader.AudioLoader;
 import jaredbgreat.arcade.loader.ImageLoader;
 import jaredbgreat.arcade.ui.graphics.Font;
-import jaredbgreat.arcade.ui.GameView;
+import jaredbgreat.arcade.ui.MainWindow;
 
 /**
  *
@@ -21,7 +21,7 @@ import jaredbgreat.arcade.ui.GameView;
 public abstract class GameActivity extends Activity {
     protected Window window;
     protected WakeLock wakelock;
-    protected GameView view;
+    protected MainWindow view;
     protected boolean wasPaused;
     protected BaseGame game; // Set to a subclass of game by a subclass of this
     protected int screenX, screenY;
@@ -46,7 +46,7 @@ public abstract class GameActivity extends Activity {
         ImageLoader.initGraphics();
         AudioLoader.initAudio();
         Font.init();
-        view = GameView.getMainWindow(this);
+        view = MainWindow.getMainWindow(this);
         setContentView(view);
         wakelock = powerman.newWakeLock(PowerManager.FULL_WAKE_LOCK, "GLGame");        
     }

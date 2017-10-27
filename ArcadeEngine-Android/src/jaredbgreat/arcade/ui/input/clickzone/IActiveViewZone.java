@@ -5,12 +5,12 @@
  */
 package jaredbgreat.arcade.ui.input.clickzone;
 
-import jaredbgreat.arcade.ui.input.PointerEvent;
+import jaredbgreat.arcade.ui.input.MouseEvent;
 
 /**
  *
  * @author jared
  */
 public interface IActiveViewZone extends IViewZone {
-    public void activate(PointerEvent e);
+    public void activate(MouseEvent e);
 }

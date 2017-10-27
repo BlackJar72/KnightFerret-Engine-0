@@ -1,9 +1,9 @@
 package jaredbgreat.arcade.util.math;
 
 import android.graphics.Bitmap;
+
 import jaredbgreat.arcade.entity.Entity;
 import jaredbgreat.arcade.ui.graphics.Graphic;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -93,8 +93,8 @@ public class Collision {
      * @param b Second entity
      * @return True of the images of the entities intersect.
      */
-    private static boolean AABB(Entity a, BufferedImage ga, Entity b, 
-            BufferedImage gb) {        
+    private static boolean AABB(Entity a, Bitmap ga, Entity b,
+            Bitmap gb) {
         double ax1 = a.getX();
         double ay1 = a.getY();
         double ax2 = ax1 + ga.getWidth();
@@ -180,7 +180,7 @@ public class Collision {
      * @param by Origin (upper left) of image b
      * @return 
      */
-    public static boolean imageOverlap(Bitmap a, int ax, int ay, 
+    public static boolean imageOverlap(Bitmap a, int ax, int ay,
             Bitmap b, int bx, int by) {
         int aw = a.getWidth();
         int ah = a.getHeight();
@@ -198,7 +198,7 @@ public class Collision {
                 int offy = by - ay;
                 for(int i = 0; i < rx; i++) {
                     for(int j = 0; j < ry; j++) {
-                        if(pixelOverlap(a.getPixel(i + offx, j + offy), 
+                        if(pixelOverlap(a.getPixel(i + offx, j + offy),
                                 b.getPixel(i, j))) {
                             return true;
                         }
@@ -208,7 +208,7 @@ public class Collision {
                 int offy = ay - by;
                 for(int i = 0; i < rx; i++) {
                     for(int j = 0; j < ry; j++) {
-                        if(pixelOverlap(a.getPixel(i + offx, j), 
+                        if(pixelOverlap(a.getPixel(i + offx, j),
                                 b.getPixel(i, j + offy))) {
                             return true;
                         }
@@ -221,7 +221,7 @@ public class Collision {
                 int offy = by - ay;
                 for(int i = 0; i < rx; i++) {
                     for(int j = 0; j < ry; j++) {
-                        if(pixelOverlap(b.getPixel(i + offx, j), 
+                        if(pixelOverlap(b.getPixel(i + offx, j),
                                 a.getPixel(i, j + offy))) {
                             return true;
                         }
@@ -231,7 +231,7 @@ public class Collision {
                 int offy = ay - by;
                 for(int i = 0; i < rx; i++) {
                     for(int j = 0; j < ry; j++) {
-                        if(pixelOverlap(b.getPixel(i + offx, j + offy), 
+                        if(pixelOverlap(b.getPixel(i + offx, j + offy),
                                 a.getPixel(i, j))) {
                             return true;
                         }

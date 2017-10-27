@@ -1,6 +1,6 @@
 package jaredbgreat.arcade.ui.input.clickzone;
 
-import jaredbgreat.arcade.ui.input.PointerEvent;
+import jaredbgreat.arcade.ui.input.MouseEvent;
 import android.graphics.Bitmap;
 import jaredbgreat.arcade.ui.graphics.Graphic;
 import jaredbgreat.arcade.ui.input.GraphicZone;
@@ -39,7 +39,7 @@ public class ActiveGraphicZone extends GraphicZone implements IActiveViewZone {
     
     
     @Override
-    public void activate(PointerEvent e) {
+    public void activate(MouseEvent e) {
         if(isActivated(e)) {
             action.activate(e);
         }

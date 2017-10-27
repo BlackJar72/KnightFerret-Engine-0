@@ -9,7 +9,7 @@ public interface IMouseTranslator {
     // events to the screen for use with clickzones.  It does not produce an     
     // array or list of coordinates, as the number of events may very and 
     // deciding which to use should be handled in some other way.
-    public  int getCommands(PointerEvent e); 
+    public  int getCommands(MouseEvent e); 
     
     
     /**
@@ -21,5 +21,5 @@ public interface IMouseTranslator {
      * 
      * @param in 
      */
-    public void process(PointerEvent in);   
+    public void process(MouseEvent in);   
 }

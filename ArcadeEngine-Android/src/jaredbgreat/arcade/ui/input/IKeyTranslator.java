@@ -5,8 +5,6 @@
  */
 package jaredbgreat.arcade.ui.input;
 
-import java.awt.event.KeyEvent;
-
 /**
  * This is an interface from translating events from the keyboard.  Game and 
  * platform specific instance of this need to be supplied to KeyInput in 
@@ -36,5 +34,5 @@ public interface IKeyTranslator {
      * 
      * @param in 
      */
-    public void process(KeyboardEvent in);
+    public void process(KeyboardEvent in);   
 }

@@ -3,14 +3,15 @@ package jaredbgreat.arcade.ui;
 
 import android.content.Context;
 import android.view.SurfaceView;
+import jaredbgreat.arcade.ui.input.MouseEvent;
 import jaredbgreat.arcade.util.Registry;
 
 /**
  *
  * @author Jared Blackburn
  */
-public class GameView extends SurfaceView {
-    private static GameView window;
+public class MainWindow extends SurfaceView {
+    private static MainWindow window;
     
     StartPanel startPanel;
     IView gamePanel;
@@ -19,7 +20,7 @@ public class GameView extends SurfaceView {
     
     
     
-    private GameView(Context context) {
+    private MainWindow(Context context) {
         super(context);
         panels = new Registry<>();
         startPanel = new StartPanel(this);
@@ -29,17 +30,25 @@ public class GameView extends SurfaceView {
     
     
     /**
-     * Retrieve the singleton window instance.
+     * Retrieve or create the singleton window instance.
      * 
      * @param context
      * @return 
      */
     // Maybe I should start looking for a non-singleton way to do this for 
     // future projects...?
-    public static GameView getMainWindow(Context context) {
+    public static MainWindow getMainWindow(Context context) {
         if(window == null) {
-            window = new GameView(context);
+            window = new MainWindow(context);
         }
+        return window;
+    }
+
+
+    /**
+     * Retrieve the singleton window instance.
+     */
+    public static MainWindow getMainWindow() {
         return window;
     }
     
@@ -60,6 +69,8 @@ public class GameView extends SurfaceView {
      * context such a cleanup would be more necessary.
      */
     public final void cleanup() {
+        panels.clear();
+        panels = null;
         currentPanel = null;
         gamePanel = null;
         startPanel = null;
@@ -82,6 +93,17 @@ public class GameView extends SurfaceView {
     
     
     /**
+     * This get a panel for use elsewhere.
+     * 
+     * @param name 
+     * @return  
+     */
+    public IView getPanel(String name) {
+        return panels.getFromName(name);
+    }
+    
+    
+    /**
      * Sets the panel to the named panel, then starts the panels activity.
      * 
      * @param name 
@@ -89,6 +111,18 @@ public class GameView extends SurfaceView {
     public void setPanel(String name) {
         currentPanel = panels.getFromName(name);
         currentPanel.start();
+    }
+    
+    
+    /**
+     * This will forward a mouse
+     * 
+     * @param e 
+     */
+    public void clickMouse(MouseEvent e) {
+        if(currentPanel instanceof AbstractClickablePanel) {
+            ((AbstractClickablePanel)currentPanel).activateWidgets(e);
+        }
     }
     
     

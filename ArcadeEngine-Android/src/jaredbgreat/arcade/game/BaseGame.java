@@ -2,7 +2,7 @@
 package jaredbgreat.arcade.game;
 
 import jaredbgreat.arcade.entity.Entity;
-import jaredbgreat.arcade.ui.GameView;
+import jaredbgreat.arcade.ui.MainWindow;
 import jaredbgreat.arcade.ui.input.InputAgregator;
 import jaredbgreat.arcade.util.GameLogger;
 import java.util.ArrayList;
@@ -13,37 +13,40 @@ import java.util.Random;
  */
 public abstract class BaseGame implements Runnable {
     public volatile static BaseGame game;
-    public volatile GameView view;
+    protected volatile MainWindow window;
     private Thread thread;
-    public volatile Timer timer;
-    public final Random rng;
-    public InputAgregator in;
+    protected volatile Timer timer;
+    protected final Random rng;
+    protected InputAgregator in;
     
-    private volatile boolean running = true,   paused   = false, 
+    protected volatile boolean running = true,   paused   = false, 
                              inGame  = false,  gameOver = false,
                              inDemo  = false;
     
-    private static final int baseFps = 60;
-    private static final float expectedTime  = 1f / baseFps;
-    private static final long  expectedSleep = 1000 / baseFps;
-    private double lastTime, thisTime, passedTime;
-    private double delta;
-    private double gameOverTime;
-    private int   inputBlocking;
+    // FIXME: This should not be a hard-coded value!  (Especially for mobile)
+    public static final int BASE_FPS = 60;
+    protected static final float expectedTime  = 1f / BASE_FPS;
+    protected static final long  expectedSleep = 1000 / BASE_FPS;
     
-    private boolean tmpPause = false;
-    private float tmpPauseTime = 0f;
+    protected double lastTime, thisTime, passedTime;
+    protected double delta;
+    protected double gameOverTime;
+    protected int   inputBlocking;
     
-    private final ArrayList<Entity> spawns;
-    private final ArrayList<Entity> kills;
+    protected boolean tmpPause = false;
+    protected float tmpPauseTime = 0f;
     
-    private ILoopElement update;
-    private ILoopElement render;
-    private ILoopElement physical;
-    private ILoopElement input;
+    protected final ArrayList<Entity> spawns;
+    protected final ArrayList<Entity> kills;
+    
+    protected ILoopElement update;
+    protected ILoopElement render;
+    protected ILoopElement physical;
+    protected ILoopElement spawning;
+    protected ILoopElement input;
     
     
-    private BaseGame() {
+    public BaseGame() {
         timer  = new Timer();
         spawns = new ArrayList<>();
         kills  = new ArrayList<>(); 
@@ -55,7 +58,7 @@ public abstract class BaseGame implements Runnable {
     /**
      * Initialize variable for a new game.
      */
-    private void init() {
+    protected void init() {
         
     }
     
@@ -98,11 +101,7 @@ public abstract class BaseGame implements Runnable {
         lastTime   = thisTime;
         thisTime   = timer.getTime();
         passedTime = (thisTime - lastTime);
-        delta      =  passedTime / expectedTime;
-//        System.out.print("Elapsed = " + passedTime * 1000 + " ms ->  ");
-//        System.out.println("FPS = " + BASE_FPS / delta);
-//        System.out.println("delta = " + delta);
-        
+        delta      =  passedTime / expectedTime;        
     }
     
     
@@ -131,13 +130,13 @@ public abstract class BaseGame implements Runnable {
     }
     
     
-    private void doSpawns() {
+    protected void doSpawns() {
         Entity.addAll(spawns);
         spawns.clear();
     }
     
     
-    private void doKills() {
+    protected void doKills() {
         Entity.removeAll(kills);
         kills.clear();        
     }
@@ -157,11 +156,11 @@ public abstract class BaseGame implements Runnable {
         inDemo = false;
         paused = false;
         gameOver = false;
-        view.startGame();
+        window.startGame();
     }
     
     
-    void setPause(boolean pause) {
+    protected void setPause(boolean pause) {
         paused = pause;
         if(paused) {
             timer.pause();
@@ -181,7 +180,7 @@ public abstract class BaseGame implements Runnable {
     }
     
     
-    private void doTmpPause() {
+    protected void doTmpPause() {
         tmpPauseTime -= passedTime;
         if(tmpPauseTime <= 0f) {
             tmpPauseTime = 0f;
@@ -195,12 +194,12 @@ public abstract class BaseGame implements Runnable {
         inDemo   = false;
         paused   = false;
         gameOver = true;
-        inputBlocking = baseFps;
+        inputBlocking = BASE_FPS;
         gameOverTime = thisTime + 30f;    
     }
     
     
-    private void gameOver() {
+    public void gameOver() {
         if(inputBlocking > 0) {
             inputBlocking--;
         }
@@ -208,7 +207,7 @@ public abstract class BaseGame implements Runnable {
             gameOverTime = -1;
             gameOver = false;
             inputBlocking = 0;
-            view.endGame();
+            window.endGame();
         }
     }
     

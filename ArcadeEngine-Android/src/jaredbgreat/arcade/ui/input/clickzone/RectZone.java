@@ -1,6 +1,6 @@
 package jaredbgreat.arcade.ui.input.clickzone;
 
-import jaredbgreat.arcade.ui.input.PointerEvent;
+import jaredbgreat.arcade.ui.input.MouseEvent;
 
 /**
  *
@@ -21,7 +21,7 @@ public class RectZone implements IViewZone {
     
 
     @Override
-    public boolean isActivated(PointerEvent e) {
+    public boolean isActivated(MouseEvent e) {
         return active && !((e.x < x1) || (e.x > x2) || (e.y < y1) || (e.y > y2));
     }
     

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import jaredbgreat.arcade.util.memory.ObjectPool;
 import java.util.ArrayList;
-import static jaredbgreat.arcade.ui.input.PointerEvent.*;
+import static jaredbgreat.arcade.ui.input.MouseEvent.*;
 import java.util.List;
 
 /**
@@ -20,20 +20,20 @@ public class PointerInput implements OnTouchListener {
     private IMouseTranslator pressed;
     private IMouseTranslator released;
     private IMouseTranslator moved;
-    private final ObjectPool.ObjectFactory<PointerEvent> factory;
-    private final ObjectPool<PointerEvent> pool;
-    private final ArrayList<PointerEvent> upBuffer, upEvents;
-    private final ArrayList<PointerEvent> downBuffer, downEvents;
-    private final ArrayList<PointerEvent> moveBuffer, moveEvents;;
+    private final ObjectPool.ObjectFactory<MouseEvent> factory;
+    private final ObjectPool<MouseEvent> pool;
+    private final ArrayList<MouseEvent> upBuffer, upEvents;
+    private final ArrayList<MouseEvent> downBuffer, downEvents;
+    private final ArrayList<MouseEvent> moveBuffer, moveEvents;;
     
     
     public PointerInput(View view) {
         scaleX = 1.0f;
         scaleY = 1.0f;
-        factory  = new ObjectPool.ObjectFactory<PointerEvent>() {
+        factory  = new ObjectPool.ObjectFactory<MouseEvent>() {
             @Override
-            public PointerEvent create() {
-                return new PointerEvent();
+            public MouseEvent create() {
+                return new MouseEvent();
             }
         };
         pool = new ObjectPool<>(factory, 512);
@@ -58,7 +58,7 @@ public class PointerInput implements OnTouchListener {
                 >> ACTION_POINTER_ID_SHIFT;
         int pcount = e.getPointerCount();
         action &= ACTION_MASK;
-        PointerEvent event;
+        MouseEvent event;
         for(int i = 0; i < pcount; i++) {
             event = pool.getObject();
             event.index = pointerIndex;
@@ -93,8 +93,8 @@ public class PointerInput implements OnTouchListener {
     }
     
     
-    private void swap(ArrayList<PointerEvent> buffer, 
-            ArrayList<PointerEvent> events) {
+    private void swap(ArrayList<MouseEvent> buffer, 
+            ArrayList<MouseEvent> events) {
         for(int i = events.size() - 1; i > -1; i--) {
             pool.free(events.get(i));
         }
@@ -136,17 +136,17 @@ public class PointerInput implements OnTouchListener {
     }
     
     
-    public List<PointerEvent> getPressed() {
+    public List<MouseEvent> getPressed() {
         return downEvents;
     }
     
     
-    public List<PointerEvent> getReleased() {
+    public List<MouseEvent> getReleased() {
         return upEvents;
     }
     
     
-    public List<PointerEvent> getDragged() {
+    public List<MouseEvent> getDragged() {
         return moveEvents;
     }
     

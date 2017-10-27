@@ -1,6 +1,6 @@
 package jaredbgreat.arcade.ui.input.clickzone;
 
-import jaredbgreat.arcade.ui.input.PointerEvent;
+import jaredbgreat.arcade.ui.input.MouseEvent;
 
 /**
  *
@@ -20,7 +20,7 @@ public class ActiveRectZone extends RectZone implements IActiveViewZone {
     }
     
     
-    public void activate(PointerEvent e) {
+    public void activate(MouseEvent e) {
         if(isActivated(e)) {
             action.activate(e);
         }

@@ -17,5 +17,5 @@ public interface IInputController extends IController {
      * @param commands Discrete commands from input devices
      * @param fvector An n-dimension vector for non-discrete input (e.g., mouse)
      */
-    public void update(int commands, float[] fvector);
+    public void update(int commands, float[] avector);
 }

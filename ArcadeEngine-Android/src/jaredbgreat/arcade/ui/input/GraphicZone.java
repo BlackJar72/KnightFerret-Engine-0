@@ -51,7 +51,7 @@ public class GraphicZone implements IViewZone {
     
 
     @Override
-    public boolean isActivated(PointerEvent e) {
+    public boolean isActivated(MouseEvent e) {
         if(active && !((e.x < x1) || (e.x > x2) || (e.y < y1) || (e.y > y2))) {
             return (image.getPixel(e.x - x1, e.y - y1) & 0xff000000) != 0;
         }
