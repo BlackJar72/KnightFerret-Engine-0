@@ -1,4 +1,4 @@
-# KinghtFerret Engine 0 (zero)
+# KnightFerret Engine 0 (zero)
 
 This it a framework (not technically an engine, but not just a library) for 
 creating arcade style and other 2d games for PC in Java.  Its based on 
